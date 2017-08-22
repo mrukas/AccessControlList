@@ -5,11 +5,11 @@ namespace ACL
 {
     public class ResourceHolder
     {
-        private readonly Dictionary<Operation, StringCollection> _operationUserMapping = new Dictionary<Operation, StringCollection>();
+        private readonly Dictionary<string, StringCollection> _operationUserMapping = new Dictionary<string, StringCollection>();
 
         public int OperationCount => _operationUserMapping.Count;
 
-        public void Add(Operation operation, string principal)
+        public void Add(string operation, string principal)
         {
             var existingOperation = GetOperationMapping(operation);
 
@@ -26,7 +26,7 @@ namespace ACL
             }
         }
 
-        public void Remove(Operation operation, string principal)
+        public void Remove(string operation, string principal)
         {
             var existingOperation = GetOperationMapping(operation);
 
@@ -44,7 +44,7 @@ namespace ACL
             }
         }
 
-        public bool ContainsPrincipal(Operation operation, string principal)
+        public bool ContainsPrincipal(string operation, string principal)
         {
             var existingOperation = GetOperationMapping(operation);
 
@@ -56,7 +56,7 @@ namespace ACL
             return existingOperation.Contains(principal);
         }
 
-        private StringCollection GetOperationMapping(Operation operation)
+        private StringCollection GetOperationMapping(string operation)
         {
             StringCollection principals;
 
@@ -68,14 +68,14 @@ namespace ACL
             return null;
         }
 
-        private void InsertOperationMapping(Operation operation, string principal)
+        private void InsertOperationMapping(string operation, string principal)
         {
             var principalCollection = new StringCollection { principal };
 
             _operationUserMapping[operation] = principalCollection;
         }
 
-        private void RemoveOperationMapping(Operation operation)
+        private void RemoveOperationMapping(string operation)
         {
             _operationUserMapping.Remove(operation);
         }

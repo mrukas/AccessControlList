@@ -5,27 +5,42 @@
         private OperationHolder _granted = new OperationHolder();
         private OperationHolder _denied = new OperationHolder();
 
-        public void Grant(string principal, Operation operation, string resource)
+        public void Grant(string principal, string operation, string resource)
         {
             _granted.Add(resource, operation, principal);
         }
 
-        public void Revoke(string principal, Operation operation, string resource)
+        public void Grant(string principal, Operation operation, string resource)
+        {
+            Grant(principal, operation.ToString().ToLowerInvariant(), resource);
+        }
+
+        public void Revoke(string principal, string operation, string resource)
         {
             _granted.Remove(resource, operation, principal);
         }
 
-        public void Deny(string principal, Operation operation, string resource)
+        public void Revoke(string principal, Operation operation, string resource)
+        {
+            Revoke(principal, operation.ToString().ToLowerInvariant(), resource);
+        }
+
+        public void Deny(string principal, string operation, string resource)
         {
             _denied.Add(resource, operation, principal);
         }
 
-        public bool IsGranted(string[] principals, Operation operation, string resource)
+        public bool IsGranted(string[] principals, string operation, string resource)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool IsGranted(string principal, Operation operation, string resource)
+        public void Deny(string principal, Operation operation, string resource)
+        {
+            Deny(principal, operation.ToString().ToLowerInvariant(), resource);
+        }
+
+        public bool IsGranted(string principal, string operation, string resource)
         {
             if (_denied.Contains(resource, operation, principal))
             {
@@ -40,14 +55,19 @@
             return false;
         }
 
-        public bool IsHierarchyGranted(string[] principals, Operation operation, string resource)
+        public bool IsHierarchyGranted(string[] principals, string operation, string resource)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool IsHierarchyGranted(string principal, Operation operation, string resource)
+        public bool IsHierarchyGranted(string principal, string operation, string resource)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool IsGranted(string principal, Operation operation, string resource)
+        {
+            return IsGranted(principal, operation.ToString().ToLowerInvariant(), resource);
         }
     }
 }

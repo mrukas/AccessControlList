@@ -6,7 +6,7 @@ namespace ACL
     {
         private readonly Dictionary<string, ResourceHolder> _operationResourceHolders = new Dictionary<string, ResourceHolder>();
 
-        public void Add(string resource, Operation operation, string principal)
+        public void Add(string resource, string operation, string principal)
         {
             var rh = GetResourceHolder(resource);
 
@@ -20,7 +20,7 @@ namespace ACL
             }
         }
 
-        public void Remove(string resource, Operation operation, string principal)
+        public void Remove(string resource, string operation, string principal)
         {
             var rh = GetResourceHolder(resource);
 
@@ -38,7 +38,7 @@ namespace ACL
             }
         }
 
-        public bool Contains(string resource, Operation operation, string principal)
+        public bool Contains(string resource, string operation, string principal)
         {
             var rh = GetResourceHolder(resource);
 
@@ -62,7 +62,7 @@ namespace ACL
             return null;
         }
 
-        private ResourceHolder InsertResourceHolder(string resource, Operation operation, string principal)
+        private ResourceHolder InsertResourceHolder(string resource, string operation, string principal)
         {
             var rh = new ResourceHolder();
             rh.Add(operation, principal);
