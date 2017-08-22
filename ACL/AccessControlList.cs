@@ -2,8 +2,8 @@
 {
     public class AccessControlList : IAccessControlList
     {
-        private OperationHolder _granted = new OperationHolder();
-        private OperationHolder _denied = new OperationHolder();
+        private ResourceHolder _granted = new ResourceHolder();
+        private ResourceHolder _denied = new ResourceHolder();
 
         public void Grant(string principal, string operation, string resource)
         {

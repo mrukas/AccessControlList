@@ -1,80 +1,83 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace ACL
 {
     public class OperationHolder
     {
-        private readonly Dictionary<string, ResourceHolder> _operationResourceHolders = new Dictionary<string, ResourceHolder>();
+        private readonly Dictionary<string, StringCollection> _operationPrincipals = new Dictionary<string, StringCollection>();
 
-        public void Add(string resource, string operation, string principal)
+        public int OperationCount => _operationPrincipals.Count;
+
+        public void Add(string operation, string principal)
         {
-            var rh = GetResourceHolder(resource);
+            var operationPrincipals = GetOperationPrincipals(operation);
 
-            if (rh == null)
+            if (operationPrincipals == null)
             {
-                InsertResourceHolder(resource, operation, principal);
+                InsertOperationPrincipals(operation, principal);
             }
             else
             {
-                rh.Add(operation, principal);
+                if (!operationPrincipals.Contains(principal))
+                {
+                    operationPrincipals.Add(principal);
+                }
             }
         }
 
-        public void Remove(string resource, string operation, string principal)
+        public void Remove(string operation, string principal)
         {
-            var rh = GetResourceHolder(resource);
+            var operationPrincipals = GetOperationPrincipals(operation);
 
-            if (rh == null)
+            if (operationPrincipals == null)
             {
                 return;
             }
 
-            rh.Remove(operation, principal);
+            operationPrincipals.Remove(principal);
 
-            // This ensures to remove resource mappings if no resource holders are in the dictionary.
-            if (rh.OperationCount == 0)
+            // This ensures to remove operation mappings of no principals are in the collection
+            if (operationPrincipals.Count == 0)
             {
-                RemoveResourceHolder(resource);
+                RemoveOperationPrincipals(operation);
             }
         }
 
-        public bool Contains(string resource, string operation, string principal)
+        public bool ContainsPrincipal(string operation, string principal)
         {
-            var rh = GetResourceHolder(resource);
+            var operationPrincipals = GetOperationPrincipals(operation);
 
-            if (rh == null)
+            if (operationPrincipals == null)
             {
                 return false;
             }
 
-            return rh.ContainsPrincipal(operation, principal);
+            return operationPrincipals.Contains(principal);
         }
 
-        private ResourceHolder GetResourceHolder(string resource)
+        private StringCollection GetOperationPrincipals(string operation)
         {
-            ResourceHolder rh;
+            StringCollection principals;
 
-            if (_operationResourceHolders.TryGetValue(resource, out rh))
+            if (_operationPrincipals.TryGetValue(operation, out principals))
             {
-                return rh;
+                return principals;
             }
 
             return null;
         }
 
-        private ResourceHolder InsertResourceHolder(string resource, string operation, string principal)
+        private void InsertOperationPrincipals(string operation, string principal)
         {
-            var rh = new ResourceHolder();
-            rh.Add(operation, principal);
+            var principalCollection = new StringCollection { principal };
 
-            _operationResourceHolders[resource] = rh;
-
-            return rh;
+            _operationPrincipals[operation] = principalCollection;
         }
 
-        private void RemoveResourceHolder(string resource)
+        private void RemoveOperationPrincipals(string operation)
         {
-            _operationResourceHolders.Remove(resource);
+            _operationPrincipals.Remove(operation);
         }
     }
 }

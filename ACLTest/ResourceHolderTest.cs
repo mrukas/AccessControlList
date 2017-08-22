@@ -1,4 +1,5 @@
-﻿using ACL;
+﻿using System.Diagnostics;
+using ACL;
 using Xunit;
 
 namespace ACLTest
@@ -9,28 +10,28 @@ namespace ACLTest
         public void Add()
         {
             var rh = new ResourceHolder();
-            rh.Add("operation1", "principal1");
+            rh.Add("resource1", "operation1", "principal1");
 
-            Assert.Equal(1, rh.OperationCount);
+            Assert.Equal(1, rh.ResourceCount);
         }
 
         [Fact]
         public void Remove()
         {
             var rh = new ResourceHolder();
-            rh.Add("operation1", "principal1");
-            rh.Remove("operation1", "principal1");
+            rh.Add("resource1", "operation1", "principal1");
+            rh.Remove("resource1", "operation1", "principal1");
 
-            Assert.Equal(0, rh.OperationCount);
+            Assert.Equal(0, rh.ResourceCount);
         }
 
         [Fact]
-        public void ContainsPrincipal()
+        public void Contains()
         {
             var rh = new ResourceHolder();
-            rh.Add("operation1", "principal1");
+            rh.Add("resource1", "operation1", "principal1");
 
-            Assert.True(rh.ContainsPrincipal("operation1", "principal1"));
+            Assert.True(rh.Contains("resource1", "operation1", "principal1"));
         }
     }
 }

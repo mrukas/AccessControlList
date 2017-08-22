@@ -26,6 +26,7 @@ namespace ACLTest
                 var resource = _fixture.GetRandomResource();
 
                 var result = _fixture.ACL.IsGranted(principal, operation, resource);
+
             }
             sw.Stop();
         }
