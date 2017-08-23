@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using ACL;
+﻿using ACL;
 using Xunit;
 
 namespace ACLTest
