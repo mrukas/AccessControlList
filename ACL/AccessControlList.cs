@@ -98,16 +98,36 @@ namespace ACL
 
         public bool IsHierarchyGranted(string principal, Operation operation, string resource)
         {
-            var isGranted = IsHierarchyGranted(principal, operation.ToString().ToLowerInvariant(), resource);
+            var operationString = operation.ToString().ToLowerInvariant();
 
-            if (isGranted)
+            if (_denied.Contains(resource, operationString, principal))
+            {
+                return false;
+            }
+
+            // If read is denied also write should be denied.
+            if (operation == Operation.Write && _denied.Contains(resource, Operation.Read.ToString().ToLowerInvariant(), principal))
+            {
+                return false;
+            }
+
+            if (_granted.Contains(resource, operationString, principal))
             {
                 return true;
             }
 
-            if (operation == Operation.Read)
+            // If write is granted also read should be granted.
+            if (operation == Operation.Read &&
+                _granted.Contains(resource, Operation.Write.ToString().ToLowerInvariant(), principal))
             {
-                return IsHierarchyGranted(principal, Operation.Write, resource);
+                return true;
+            }
+
+            var removedHierarchy = RemoveHierarchySegment(resource);
+
+            if (removedHierarchy != resource)
+            {
+                return IsHierarchyGranted(principal, operation, removedHierarchy);
             }
 
             return false;
@@ -115,7 +135,32 @@ namespace ACL
 
         public bool IsGranted(string principal, Operation operation, string resource)
         {
-            return IsGranted(principal, operation.ToString().ToLowerInvariant(), resource);
+            var operationString = operation.ToString().ToLowerInvariant();
+
+            if (_denied.Contains(resource, operationString, principal))
+            {
+                return false;
+            }
+
+            // If read is denied also write should be denied.
+            if (operation == Operation.Write && _denied.Contains(resource, Operation.Read.ToString().ToLowerInvariant(), principal))
+            {
+                return false;
+            }
+
+            if (_granted.Contains(resource, operationString, principal))
+            {
+                return true;
+            }
+
+            // If write is granted also read should be granted.
+            if (operation == Operation.Read &&
+                _granted.Contains(resource, Operation.Write.ToString().ToLowerInvariant(), principal))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private string RemoveHierarchySegment(string resource)

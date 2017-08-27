@@ -121,5 +121,23 @@ namespace ACLTest
             acl.Deny("principal1", Operation.Write, "r1.r2.r3");
             Assert.True(acl.IsHierarchyGranted("principal1", Operation.Read, "r1.r2.r3.r4"));
         }
+
+        [Fact]
+        public void IsHierarchyGrantedEnum5()
+        {
+            var acl = new AccessControlList();
+            acl.Grant("principal1", Operation.Write, "r1");
+            acl.Deny("principal1", Operation.Read, "r1.r2.r3");
+            Assert.False(acl.IsHierarchyGranted("principal1", Operation.Read, "r1.r2.r3.r4"));
+        }
+
+        [Fact]
+        public void IsHierarchyGrantedEnum6()
+        {
+            var acl = new AccessControlList();
+            acl.Grant("principal1", Operation.Write, "r1");
+            acl.Deny("principal1", Operation.Read, "r1.r2.r3");
+            Assert.False(acl.IsHierarchyGranted("principal1", Operation.Write, "r1.r2.r3.r4"));
+        }
     }
 }
