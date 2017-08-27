@@ -3,11 +3,11 @@ using Xunit;
 
 namespace ACLTest
 {
-    public class ACLTests : IClassFixture<ACLFixture>
+    public class ACLTests : IClassFixture<ReadWriteACLFixture>
     {
-        private readonly ACLFixture _fixture;
+        private readonly ReadWriteACLFixture _fixture;
 
-        public ACLTests(ACLFixture fixture)
+        public ACLTests(ReadWriteACLFixture fixture)
         {
             _fixture = fixture;
         }
@@ -30,7 +30,7 @@ namespace ACLTest
         [Fact]
         public void IsGranted()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "resource1");
             Assert.True(acl.IsGranted("principal1", "operation1", "resource1"));
         }
@@ -38,7 +38,7 @@ namespace ACLTest
         [Fact]
         public void Deny()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "resource1");
             acl.Deny("principal1", "operation1", "resource1");
             Assert.False(acl.IsGranted("principal1", "operation1", "resource1"));
@@ -47,7 +47,7 @@ namespace ACLTest
         [Fact]
         public void Grant()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "resource1");
             Assert.True(acl.IsGranted("principal1", "operation1", "resource1"));
         }
@@ -55,7 +55,7 @@ namespace ACLTest
         [Fact]
         public void Revoke()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "resource1");
             acl.Revoke("principal1", "operation1", "resource1");
             Assert.False(acl.IsGranted("principal1", "operation1", "resource1"));
@@ -64,7 +64,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGranted1()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "r1");
             Assert.True(acl.IsHierarchyGranted("principal1", "operation1", "r1.r2.r3"));
         }
@@ -72,7 +72,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGranted2()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "r1");
             acl.Deny("principal1", "operation1", "r1.r2");
             Assert.False(acl.IsHierarchyGranted("principal1", "operation1", "r1.r2.r3"));
@@ -81,7 +81,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGranted3()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", "operation1", "r1");
             acl.Deny("principal1", "operation1", "r1.r2");
             acl.Grant("principal1", "operation1", "r1.r2.r3");
@@ -91,7 +91,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum1()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             Assert.True(acl.IsHierarchyGranted("principal1", Operation.Write, "r1.r2.r3.r4"));
         }
@@ -99,7 +99,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum2()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             Assert.True(acl.IsHierarchyGranted("principal1", Operation.Read, "r1.r2.r3.r4"));
         }
@@ -107,7 +107,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum3()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             acl.Deny("principal1", Operation.Write, "r1.r2.r3");
             Assert.False(acl.IsHierarchyGranted("principal1", Operation.Write, "r1.r2.r3.r4"));
@@ -116,7 +116,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum4()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             acl.Deny("principal1", Operation.Write, "r1.r2.r3");
             Assert.True(acl.IsHierarchyGranted("principal1", Operation.Read, "r1.r2.r3.r4"));
@@ -125,7 +125,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum5()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             acl.Deny("principal1", Operation.Read, "r1.r2.r3");
             Assert.False(acl.IsHierarchyGranted("principal1", Operation.Read, "r1.r2.r3.r4"));
@@ -134,7 +134,7 @@ namespace ACLTest
         [Fact]
         public void IsHierarchyGrantedEnum6()
         {
-            var acl = new AccessControlList();
+            var acl = new ReadWriteAccessControlList();
             acl.Grant("principal1", Operation.Write, "r1");
             acl.Deny("principal1", Operation.Read, "r1.r2.r3");
             Assert.False(acl.IsHierarchyGranted("principal1", Operation.Write, "r1.r2.r3.r4"));

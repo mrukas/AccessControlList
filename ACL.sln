@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACLTest", "ACLTest\ACLTest.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACL", "ACL\ACL.csproj", "{6CE298B8-8964-4481-B823-D682587B08E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACLObjectSecurity", "ACLObjectSecurity\ACLObjectSecurity.csproj", "{5870B3F5-506F-4B90-B44D-F526CF755608}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6CE298B8-8964-4481-B823-D682587B08E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CE298B8-8964-4481-B823-D682587B08E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CE298B8-8964-4481-B823-D682587B08E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5870B3F5-506F-4B90-B44D-F526CF755608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5870B3F5-506F-4B90-B44D-F526CF755608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5870B3F5-506F-4B90-B44D-F526CF755608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5870B3F5-506F-4B90-B44D-F526CF755608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

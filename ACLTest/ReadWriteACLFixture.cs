@@ -4,18 +4,18 @@ using ACL;
 
 namespace ACLTest
 {
-    public class ACLFixture
+    public class ReadWriteACLFixture
     {
         private Random _random = new Random();
 
-        public AccessControlList ACL;
+        public ReadWriteAccessControlList ACL;
         private readonly string[] _resources;
         private readonly string[] _principals;
         private readonly string[] _operations;
 
-        public ACLFixture()
+        public ReadWriteACLFixture()
         {
-            ACL = new AccessControlList();
+            ACL = new ReadWriteAccessControlList();
 
             _resources = GenerateRandomStringArray(1000);
             _principals = GenerateRandomStringArray(100);

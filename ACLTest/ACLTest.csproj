@@ -62,7 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACLFixture.cs" />
+    <Compile Include="ReadWriteACLFixture.cs" />
     <Compile Include="ACLTests.cs" />
     <Compile Include="ResourceHolderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
