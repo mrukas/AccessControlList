@@ -8,11 +8,11 @@ namespace ACL
         protected readonly ResourceHolder Granted = new ResourceHolder();
         protected readonly ResourceHolder Denied = new ResourceHolder();
 
-        private readonly string _hierarchySeparator;
+        public string HierarchySeparator { get; }
 
         public AccessControlList(string hierarchySeparator = ".")
         {
-            _hierarchySeparator = hierarchySeparator;
+            HierarchySeparator = hierarchySeparator;
         }
 
         public void Grant(string principal, string operation, string resource)
@@ -84,7 +84,7 @@ namespace ACL
 
         protected string RemoveHierarchySegment(string resource)
         {
-            var separatorIndex = resource.LastIndexOf(_hierarchySeparator, StringComparison.Ordinal);
+            var separatorIndex = resource.LastIndexOf(HierarchySeparator, StringComparison.Ordinal);
 
             if (separatorIndex != -1)
             {
